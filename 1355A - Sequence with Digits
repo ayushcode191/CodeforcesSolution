@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class A1355 {
+    static long minD(long n) {
+        long min = 9;  // Since digit values are from 0 to 9, initializing to 9
+        while (n != 0) {
+            long digit = n % 10;
+            if (digit < min) {
+                min = digit;
+            }
+            if (min == 0) break;  // Short circuit if we find a 0
+            n /= 10;
+        }
+        return min;
+    }
+
+    static long maxD(long n) {
+        long max = 0;  // Since digit values are from 0 to 9, initializing to 0
+        while (n != 0) {
+            long digit = n % 10;
+            if (digit > max) {
+                max = digit;
+            }
+            if (max == 9) break;  // Short circuit if we find a 9
+            n /= 10;
+        }
+        return max;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            long a1 = sc.nextLong();
+            long k = sc.nextLong();
+            if (k == 1) {
+                System.out.println(a1);
+            } else {
+                long ak = a1;
+                for (long i = 1; i < k; i++) {
+                    long minDigit = minD(ak);
+                    long maxDigit = maxD(ak);
+                    if (minDigit == 0) break;  // No change in a if minDigit is 0
+                    ak += minDigit * maxDigit;
+                }
+                System.out.println(ak);
+            }
+        }
+        sc.close();
+    }
+}
